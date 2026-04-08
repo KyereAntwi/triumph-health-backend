@@ -17,7 +17,11 @@ public static class PipelinesStartup
 
         app.UseRouting();
         
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseHttpsRedirection();
+        }
+        
         app.UseAuthentication();
         app.UseMiddleware<TenantResolverMiddleware>();
         app.UseAuthorization();

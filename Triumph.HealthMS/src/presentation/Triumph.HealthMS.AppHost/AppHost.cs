@@ -9,8 +9,7 @@ var rabbit = builder.AddRabbitMQ("rabbitmq")
     .WithManagementPlugin();
 
 var keycloak = builder.AddKeycloak("keycloak")
-    .WithEnvironment("KEYCLOAK_ADMIN", "admin")
-    .WithEnvironment("KEYCLOAK_ADMIN_PASSWORD", "admin");
+    .WithDataVolume("keycloak-data");
 
 var jaeger = builder.AddContainer("jaeger", "jaegertracing/all-in-one")
     .WithHttpEndpoint(targetPort: 16686, name: "ui")
@@ -39,6 +38,6 @@ var api = builder.AddProject<Projects.Triumph_HealthMS_Host>("api")
     .WaitFor(keycloak);
 
 api.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", jaeger.GetEndpoint("otlp"));
-api.WithEnvironment("Keycloak__Authority", keycloak.GetEndpoint("http"));
+api.WithEnvironment("AuthServer__Authority", keycloak.GetEndpoint("http"));
 
 builder.Build().Run();

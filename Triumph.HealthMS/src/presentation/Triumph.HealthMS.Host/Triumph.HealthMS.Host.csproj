@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\infrastructure\Triumph.HealthMS.ExternalServices\Triumph.HealthMS.ExternalServices.csproj" />
       <ProjectReference Include="..\Triumph.HealthMS.Commands\Triumph.HealthMS.Commands.csproj" />
       <ProjectReference Include="..\Triumph.HealthMS.Queries\Triumph.HealthMS.Queries.csproj" />
       <ProjectReference Include="..\Triumph.HealthMS.Service.Defaults\Triumph.HealthMS.Service.Defaults.csproj" />

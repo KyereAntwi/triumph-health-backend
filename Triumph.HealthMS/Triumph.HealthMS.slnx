@@ -6,6 +6,7 @@
     <Project Path="src/core/Triumph.HealthMS.Shared/Triumph.HealthMS.Shared.csproj" />
   </Folder>
   <Folder Name="/src/infrastructure/">
+    <Project Path="src/infrastructure/Triumph.HealthMS.ExternalServices/Triumph.HealthMS.ExternalServices.csproj" />
     <Project Path="src/infrastructure/Triumph.HealthMS.Persistence/Triumph.HealthMS.Persistence.csproj" />
   </Folder>
   <Folder Name="/src/presentation/">

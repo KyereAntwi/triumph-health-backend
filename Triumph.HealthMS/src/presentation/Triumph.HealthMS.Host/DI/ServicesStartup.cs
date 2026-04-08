@@ -9,15 +9,13 @@ public static class ServicesStartup
         // register layers
         builder.Services.AddApplicationLayer();
         builder.Services.AddPersistenceLayer(builder.Configuration);
+        builder.Services.AddExternalServicesLayer(builder.Configuration);
         builder.Services.AddCommandServices();
         builder.Services.AddQueryServices();
 
         // aspire configurations
         builder.AddServiceDefaults();
         builder.AddRedisClient(connectionName: "redis");
-
-        builder.Services.AddAuthentication();
-        builder.Services.AddAuthorization();
         
         return builder.Build();
     }
