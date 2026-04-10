@@ -55,6 +55,29 @@ public static class RegisterExternalServicesLayer
         
         services.AddAuthorization();
         
+        // mass transit
+        services.AddMassTransit(config =>
+        {
+            config.SetKebabCaseEndpointNameFormatter();
+            
+            // register consumers globally
+            config.AddConsumers(typeof(RegisterExternalServicesLayer).Assembly);
+            
+            //config.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+            
+            // for rabbitmq
+            config.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(new Uri(configuration["RabbitMQ:Host"] ?? throw new InvalidOperationException()), host =>
+                {
+                    host.Username(configuration["RabbitMQ:Username"] ?? throw new InvalidOperationException());
+                    host.Password(configuration["RabbitMQ:Password"] ?? throw new InvalidOperationException());
+                });
+                
+                cfg.ConfigureEndpoints(context);
+            });
+        });
+        
         return services;
     }
 }

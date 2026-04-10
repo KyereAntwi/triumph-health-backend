@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Triumph.HealthMS.Domain\Triumph.HealthMS.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\HealthFacilities\" />
+    </ItemGroup>
+
 </Project>

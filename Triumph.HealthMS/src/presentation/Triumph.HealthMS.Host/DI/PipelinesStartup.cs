@@ -13,6 +13,11 @@ public static class PipelinesStartup
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Triumph.HealthMS API V1");
                 options.RoutePrefix = string.Empty;
             });
+            
+            // perform database update for any new migrations
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Database.Migrate();
         }
 
         app.UseRouting();
@@ -24,6 +29,7 @@ public static class PipelinesStartup
         
         app.UseAuthentication();
         app.UseMiddleware<TenantResolverMiddleware>();
+        app.UseMiddleware<UserResourceAccessMiddleware>();
         app.UseAuthorization();
         
         app.MapGraphQL();

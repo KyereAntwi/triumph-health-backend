@@ -1,6 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
+    .WithDataVolume("postgres-data")
     .AddDatabase("healthcare");
 
 var redis = builder.AddRedis("redis");
@@ -37,7 +38,14 @@ var api = builder.AddProject<Projects.Triumph_HealthMS_Host>("api")
     .WaitFor(rabbit)
     .WaitFor(keycloak);
 
-api.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", jaeger.GetEndpoint("otlp"));
-api.WithEnvironment("AuthServer__Authority", keycloak.GetEndpoint("http"));
+api.WithEnvironment(ctx =>
+{
+    ctx.EnvironmentVariables["RabbitMQ__Username"] = rabbit.Resource.UserNameParameter?.Value ?? "guest";
+    ctx.EnvironmentVariables["RabbitMQ__Password"] = rabbit.Resource.PasswordParameter?.Value ?? "guest";
+    ctx.EnvironmentVariables["RabbitMQ__Host"] = rabbit.Resource.PrimaryEndpoint;
+    ctx.EnvironmentVariables["OTEL_EXPORTER_OTLP_ENDPOINT"] =  jaeger.GetEndpoint("otlp");
+    ctx.EnvironmentVariables["AuthServer__Authority"] = keycloak.GetEndpoint("http");
+});
+
 
 builder.Build().Run();

@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Triumph.HealthMS.Shared\Triumph.HealthMS.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Common\Enums\" />
+    </ItemGroup>
+
 </Project>

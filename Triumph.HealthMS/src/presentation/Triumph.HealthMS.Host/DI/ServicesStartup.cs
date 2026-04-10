@@ -17,6 +17,21 @@ public static class ServicesStartup
         builder.AddServiceDefaults();
         builder.AddRedisClient(connectionName: "redis");
         
+        builder.Services.AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService("Triumph.HealthMS.Host"))
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .AddNpgsql();
+            });
+
+        builder.Logging.AddOpenTelemetry(logging =>
+        {
+            logging.IncludeFormattedMessage = true;
+            logging.IncludeScopes = true;
+            logging.AddOtlpExporter();
+        });
+        
         return builder.Build();
     }
 }
