@@ -12,7 +12,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Triumph.HealthMS.Application.Interfaces;
 global using Triumph.HealthMS.Domain.Common;
-global using Triumph.HealthMS.Domain.Logs;
+global using Triumph.HealthMS.Domain.AuditLogs;
 global using Triumph.HealthMS.Domain.Patients;
 global using Triumph.HealthMS.Domain.Tenants;
 global using Triumph.HealthMS.Domain.Tenants.Employees;
