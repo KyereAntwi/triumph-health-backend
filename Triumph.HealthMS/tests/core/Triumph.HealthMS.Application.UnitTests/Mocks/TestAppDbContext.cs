@@ -31,7 +31,9 @@ public class TestAppDbContext : DbContext, IApplicationDbContext
         modelBuilder.Entity<Employee>(b =>
         {
             b.HasKey(e => e.Id);
+            b.HasOne(e => e.ApplicationUser).WithMany().HasForeignKey(e => e.ApplicationUserId);
             b.HasMany(e => e.Permissions).WithOne().HasForeignKey(ep => ep.EmployeeId);
+            b.HasMany(e => e.Roles).WithOne(r => r.Employee).HasForeignKey(r => r.EmployeeId);
         });
         modelBuilder.Entity<EmployeePermission>().HasKey(e => e.Id);
         modelBuilder.Entity<Patient>().HasKey(e => e.Id);

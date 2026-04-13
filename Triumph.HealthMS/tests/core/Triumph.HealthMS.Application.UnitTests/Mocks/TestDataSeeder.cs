@@ -52,5 +52,87 @@ public static class TestDataSeeder
         tenantContext.TenantId.Returns(tenantId ?? TestConstants.TestTenantId);
         return tenantContext;
     }
+
+    /// <summary>
+    /// Seeds a Role and returns it.
+    /// </summary>
+    public static Role SeedRole(
+        TestAppDbContext dbContext,
+        string title = "Doctor",
+        string description = "Medical Doctor",
+        Guid? tenantId = null)
+    {
+        var role = new Role
+        {
+            Id = Guid.NewGuid(),
+            Title = title,
+            Description = description,
+            TenantId = tenantId ?? TestConstants.TestTenantId
+        };
+        dbContext.Roles.Add(role);
+        dbContext.SaveChanges();
+        return role;
+    }
+
+    /// <summary>
+    /// Seeds an Employee with an ApplicationUser and an initial EmployeeRole.
+    /// Returns the employee, user, and the initial role assignment.
+    /// </summary>
+    public static (Employee Employee, ApplicationUser User, EmployeeRole EmployeeRole) SeedEmployeeWithRole(
+        TestAppDbContext dbContext,
+        Guid roleId,
+        Guid? tenantId = null,
+        DateTime? resumedRoleAt = null)
+    {
+        var tid = tenantId ?? TestConstants.TestTenantId;
+
+        var user = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            FirstName = "Test",
+            LastName = "Employee",
+            Email = "test.employee@test.com",
+            PhoneNumber = "+1234567890",
+            DateOfBirth = new DateOnly(1990, 1, 1),
+            UserId = "temporal-user",
+            OtherNames = string.Empty
+        };
+        dbContext.ApplicationUsers.Add(user);
+
+        var employee = new Employee
+        {
+            Id = Guid.NewGuid(),
+            ApplicationUserId = user.Id,
+            TenantId = tid,
+            EmployedAt = DateTime.UtcNow
+        };
+        dbContext.Employees.Add(employee);
+
+        var employeeRole = new EmployeeRole
+        {
+            Id = Guid.NewGuid(),
+            EmployeeId = employee.Id,
+            RoleId = roleId,
+            ResumedRoleAt = resumedRoleAt ?? DateTime.UtcNow.AddMonths(-6),
+            CreatedAt = resumedRoleAt ?? DateTime.UtcNow.AddMonths(-6)
+        };
+        dbContext.EmployeeRoles.Add(employeeRole);
+
+        dbContext.SaveChanges();
+        return (employee, user, employeeRole);
+    }
+
+    /// <summary>
+    /// Configures an IPermissionsServices mock granting or denying a specific permission.
+    /// </summary>
+    public static IPermissionsServices CreateMockPermissionsService(
+        PermissionValue permission,
+        bool granted = true)
+    {
+        var service = Substitute.For<IPermissionsServices>();
+        service.HasPermission(permission, Arg.Any<CancellationToken>())
+            .Returns(granted);
+        return service;
+    }
 }
 
