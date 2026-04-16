@@ -12,6 +12,8 @@ public class HealthFacility : TenantEntity
     public HealthOrganization? HealthOrganization { get; set; }
     public ICollection<Department> Departments { get; set; } = [];
     public ICollection<Patient> Patients { get; set; } = [];
-    public ICollection<Appointment> Appointments { get; set; } = [];
     public ICollection<Employee> Employees { get; set; } = [];
+    public ICollection<FacilityOpdCaptureItem> FacilityOpdCaptureItems { get; set; } = [];
+    public ICollection<FacilityProcedure> FacilityProcedures { get; set; } = [];
+    public ICollection<FacilityLabTest> FacilityLabTests { get; set; } = [];
 }

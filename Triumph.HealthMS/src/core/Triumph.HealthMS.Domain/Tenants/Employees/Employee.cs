@@ -9,6 +9,7 @@ public class Employee : TenantEntity
     public virtual Department? Department { get; set; }
     public ICollection<EmployeePermission> Permissions { get; set; } = [];
     public ICollection<EmployeeRole> Roles { get; set; } = [];
+    public ICollection<Appointment> Appointments { get; set; } = [];
 
     [ForeignKey("TenantId")]
     public HealthOrganization? HealthOrganization { get; set; }

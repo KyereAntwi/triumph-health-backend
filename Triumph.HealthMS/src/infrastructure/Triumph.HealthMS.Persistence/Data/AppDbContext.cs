@@ -84,6 +84,12 @@ public class AppDbContext : DbContext, IApplicationDbContext
             .HasQueryFilter(e => !e.Deleted);
     }
 
+    public DbSet<OpdCaptureItem> OpdCaptureItems => Set<OpdCaptureItem>();
+    public DbSet<Procedure> Procedures => Set<Procedure>();
+    public DbSet<Allergy> Allergies => Set<Allergy>();
+    public DbSet<Drug> Drugs => Set<Drug>();
+    public DbSet<ChronicCondition> ChronicConditions => Set<ChronicCondition>();
+    public DbSet<LabTest> LabTests => Set<LabTest>();
     public DbSet<Patient> Patients => Set<Patient>();
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
     public DbSet<Permission> Permissions => Set<Permission>();
@@ -97,4 +103,14 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<EmployeeRole> EmployeeRoles => Set<EmployeeRole>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<EmployeePermission> EmployeePermissions => Set<EmployeePermission>();
+    public DbSet<Appointment> Appointments => Set<Appointment>();
+    public DbSet<EmergencyContact> EmergencyContacts => Set<EmergencyContact>();
+    public DbSet<Medication> Medications => Set<Medication>();
+    public DbSet<PatientAllergy> PatientAllergies => Set<PatientAllergy>();
+    public DbSet<PatientChronicCondition> PatientChronicConditions => Set<PatientChronicCondition>();
+    public DbSet<PatientLabTest> PatientLabTests => Set<PatientLabTest>();
+    public DbSet<PatientProcedure> PatientProcedures => Set<PatientProcedure>();
+    public DbSet<Visit> Visits => Set<Visit>();
+    public DbSet<FacilityOpdCaptureItem> FacilityOpdCaptureItems => Set<FacilityOpdCaptureItem>();
+    public DbSet<PatientFacilityOpdCaptureItem> PatientFacilityOpdCaptureItems => Set<PatientFacilityOpdCaptureItem>();
 }

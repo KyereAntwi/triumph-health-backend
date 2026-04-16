@@ -5,8 +5,8 @@ public class Appointment : TenantEntity
     public Guid PatientId { get; set; }
     public Patient? Patient { get; set; }
 
-    public Guid FacilityId { get; set; }
-    public HealthFacility? HealthFacility { get; set; }
+    public Guid EmployeeId { get; set; }
+    public Employee? Employee { get; set; }
 
     public DateOnly DueDate { get; set; }
     public TimeOnly StartAt { get; set; }

@@ -41,7 +41,7 @@ var api = builder.AddProject<Projects.Triumph_HealthMS_Host>("api")
 api.WithEnvironment(ctx =>
 {
     ctx.EnvironmentVariables["RabbitMQ__Username"] = rabbit.Resource.UserNameParameter?.Value ?? "guest";
-    ctx.EnvironmentVariables["RabbitMQ__Password"] = rabbit.Resource.PasswordParameter?.Value ?? "guest";
+    ctx.EnvironmentVariables["RabbitMQ__Password"] = rabbit.Resource.PasswordParameter.Value ?? "guest";
     ctx.EnvironmentVariables["RabbitMQ__Host"] = rabbit.Resource.PrimaryEndpoint;
     ctx.EnvironmentVariables["OTEL_EXPORTER_OTLP_ENDPOINT"] =  jaeger.GetEndpoint("otlp");
     ctx.EnvironmentVariables["AuthServer__Authority"] = keycloak.GetEndpoint("http");

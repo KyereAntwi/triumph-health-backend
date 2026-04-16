@@ -21,6 +21,7 @@ public sealed class LinkInvitedEmployeeToCreatedAccountCommandHandler(IApplicati
         var existingEmployee = await dbContext
             .Employees
             .Select(e => new { e.Id, e.ApplicationUser })
+            .IgnoreQueryFilters()
             .FirstOrDefaultAsync(e => e.Id == command.EmployeeId, cancellationToken);
 
         if (existingEmployee is null)

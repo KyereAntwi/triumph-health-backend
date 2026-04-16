@@ -39,10 +39,5 @@ public class HealthFacilityConfigurations : IEntityTypeConfiguration<HealthFacil
             .WithOne(x => x.HealthFacility)
             .HasForeignKey(x => x.FacilityId)
             .OnDelete(DeleteBehavior.NoAction);
-        
-        builder.HasMany(x => x.Appointments)
-            .WithOne(x => x.HealthFacility)
-            .HasForeignKey(x => x.FacilityId)
-            .OnDelete(DeleteBehavior.NoAction);
     }
 }

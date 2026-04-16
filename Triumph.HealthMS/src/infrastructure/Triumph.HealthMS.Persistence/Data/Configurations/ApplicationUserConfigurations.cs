@@ -31,6 +31,10 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.Property(x => x.OtherNames)
             .HasMaxLength(50);
         
+        builder.Property(x => x.Nationality)
+            .HasMaxLength(50)
+            .IsRequired();
+        
         builder.HasMany(x  => x.Patients)
             .WithOne(x => x.ApplicationUser)
             .HasForeignKey(x => x.ApplicationUserId)

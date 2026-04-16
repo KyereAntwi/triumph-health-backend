@@ -27,9 +27,14 @@ public class TenantResolverMiddleware
                 user.FindFirst("sub")?.Value ?? 
                 throw new UnauthorizedAccessException("User ID missing");
             
-            // Only DB call needed — ApplicationUser is not tenant-filtered
             if (!await dbContext.ApplicationUsers.AnyAsync(u => u.UserId == tenantContext.UserId))
                 throw new UnauthorizedAccessException("User not found");
+
+            if (httpContext.Request.Headers["X-Employee-Account-Link"].Count > 0)
+            {
+                await _next(httpContext);
+                return;
+            }
             
             var tenantId = 
                 user.FindFirst("tenant_id")?.Value ?? 
