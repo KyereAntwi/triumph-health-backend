@@ -21,13 +21,13 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
-        run: dotnet restore Triumph.HealthMS.slnx
+        run: dotnet restore Triumph.HealthMS/Triumph.HealthMS.slnx
 
       - name: Build
-        run: dotnet build Triumph.HealthMS.slnx --no-restore -c Release
+        run: dotnet build Triumph.HealthMS/Triumph.HealthMS.slnx --no-restore -c Release
 
       - name: Run unit tests
-        run: dotnet test tests/core/Triumph.HealthMS.Application.UnitTests/Triumph.HealthMS.Application.UnitTests.csproj --no-build -c Release --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results
+        run: dotnet test Triumph.HealthMS/tests/core/Triumph.HealthMS.Application.UnitTests/Triumph.HealthMS.Application.UnitTests.csproj --no-build -c Release --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
