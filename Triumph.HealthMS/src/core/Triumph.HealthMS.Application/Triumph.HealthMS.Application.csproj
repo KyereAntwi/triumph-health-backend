@@ -8,9 +8,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Triumph.HealthMS.Domain\Triumph.HealthMS.Domain.csproj" />
+      <ProjectReference Include="..\Triumph.HealthMS.Shared\Triumph.HealthMS.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Features/Employees/GetAllEmployees/" />
+      <Folder Include="Features/Patients/ProcessConsultation/" />
+      <Folder Include="Features/Patients/StartAConsultation/" />
       <Folder Include="Features\HealthFacilities\" />
     </ItemGroup>
 

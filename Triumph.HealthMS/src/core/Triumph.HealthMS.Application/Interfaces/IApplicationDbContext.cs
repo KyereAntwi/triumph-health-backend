@@ -15,5 +15,11 @@ public interface IApplicationDbContext
     public DbSet<EmployeeRole> EmployeeRoles { get; }
     public DbSet<Role> Roles { get; }
     public DbSet<Employee> Employees { get; }
+    public DbSet<Visit> Visits { get; }
+    public DbSet<FacilityOpdCaptureItem> FacilityOpdCaptureItems { get; }
+    public DbSet<PatientFacilityOpdCaptureItem> PatientFacilityOpdCaptureItems { get; }
+    public DbSet<Drug> Drugs { get; }
+    public DbSet<Medication> Medications { get; }
+    public DbSet<Consultation> Consultations { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

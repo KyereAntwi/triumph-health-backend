@@ -59,23 +59,35 @@ public static class RegisterExternalServicesLayer
         services.AddMassTransit(config =>
         {
             config.SetKebabCaseEndpointNameFormatter();
-            
-            // register consumers globally
             config.AddConsumers(typeof(RegisterExternalServicesLayer).Assembly);
-            
-            //config.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
-            
-            // for rabbitmq
-            config.UsingRabbitMq((context, cfg) =>
+
+            var rabbitMqConnection = configuration["RabbitMq:Connection"];
+            var rabbitMqHost = configuration["RabbitMq:Host"];
+
+            if (!string.IsNullOrEmpty(rabbitMqConnection))
             {
-                cfg.Host(new Uri(configuration["RabbitMQ:Host"] ?? throw new InvalidOperationException()), host =>
+                config.UsingRabbitMq((context, cfg) =>
                 {
-                    host.Username(configuration["RabbitMQ:Username"] ?? throw new InvalidOperationException());
-                    host.Password(configuration["RabbitMQ:Password"] ?? throw new InvalidOperationException());
+                    cfg.Host(new Uri(rabbitMqConnection));
+                    cfg.ConfigureEndpoints(context);
                 });
-                
-                cfg.ConfigureEndpoints(context);
-            });
+            }
+            else if (!string.IsNullOrEmpty(rabbitMqHost))
+            {
+                config.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(rabbitMqHost, h =>
+                    {
+                        h.Username(configuration["RabbitMq:Username"] ??  "guest");
+                        h.Password(configuration["RabbitMq:Password"] ??  "guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            }
+            else
+            {
+                config.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+            }
         });
         
         return services;

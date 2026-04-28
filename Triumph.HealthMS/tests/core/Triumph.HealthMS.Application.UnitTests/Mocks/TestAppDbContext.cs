@@ -20,6 +20,12 @@ public class TestAppDbContext : DbContext, IApplicationDbContext
     public DbSet<EmployeeRole> EmployeeRoles => Set<EmployeeRole>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<Visit> Visits => Set<Visit>();
+    public DbSet<FacilityOpdCaptureItem> FacilityOpdCaptureItems => Set<FacilityOpdCaptureItem>();
+    public DbSet<PatientFacilityOpdCaptureItem> PatientFacilityOpdCaptureItems => Set<PatientFacilityOpdCaptureItem>();
+    public DbSet<Drug> Drugs => Set<Drug>();
+    public DbSet<Medication> Medications => Set<Medication>();
+    public DbSet<Consultation> Consultations => Set<Consultation>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,6 +49,13 @@ public class TestAppDbContext : DbContext, IApplicationDbContext
         modelBuilder.Entity<Department>().HasKey(e => e.Id);
         modelBuilder.Entity<EmployeeRole>().HasKey(e => e.Id);
         modelBuilder.Entity<Role>().HasKey(e => e.Id);
+        modelBuilder.Entity<Visit>(b =>
+        {
+            b.HasKey(e => e.Id);
+            b.HasOne(v => v.Patient).WithMany(p => p.Visits).HasForeignKey(v => v.PatientId);
+        });
+        modelBuilder.Entity<FacilityOpdCaptureItem>().HasKey(e => e.Id);
+        modelBuilder.Entity<PatientFacilityOpdCaptureItem>().HasKey(e => e.Id);
 
         // Make audit fields optional for all AuditableEntity-derived types
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())

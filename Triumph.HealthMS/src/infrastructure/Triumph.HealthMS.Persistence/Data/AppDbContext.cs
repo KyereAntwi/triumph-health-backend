@@ -113,4 +113,5 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Visit> Visits => Set<Visit>();
     public DbSet<FacilityOpdCaptureItem> FacilityOpdCaptureItems => Set<FacilityOpdCaptureItem>();
     public DbSet<PatientFacilityOpdCaptureItem> PatientFacilityOpdCaptureItems => Set<PatientFacilityOpdCaptureItem>();
+    public DbSet<Consultation> Consultations => Set<Consultation>();
 }

@@ -2,9 +2,13 @@
 
 global using Carter;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi;
 global using Npgsql;
 global using OpenTelemetry.Logs;
 global using OpenTelemetry.Resources;
+global using Scalar.AspNetCore;
+global using Serilog;
+global using Serilog.Events;
 global using Triumph.HealthMS.Application.DI;
 global using Triumph.HealthMS.Application.Interfaces;
 global using Triumph.HealthMS.Commands.DI;

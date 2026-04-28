@@ -16,6 +16,7 @@ global using Triumph.HealthMS.Application.Behaviors;
 global using Triumph.HealthMS.Application.Interfaces;
 global using Triumph.HealthMS.Application.Utility;
 global using Triumph.HealthMS.Domain.Common;
+global using Triumph.HealthMS.Domain.Common.Enums;
 global using Triumph.HealthMS.Domain.Patients;
 global using Triumph.HealthMS.Domain.Tenants;
 global using Triumph.HealthMS.Domain.Tenants.Employees;

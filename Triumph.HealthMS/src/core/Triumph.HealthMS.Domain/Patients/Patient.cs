@@ -2,6 +2,7 @@ namespace Triumph.HealthMS.Domain.Patients;
 
 public class Patient : TenantEntity
 {
+    public string UniqueIdentifier { get; set; } = string.Empty;
     public string? PassportNumber { get; set; }
     public string NationalIdNumber { get; set; } = string.Empty;
     public string? HomeAddress { get; set; }
@@ -9,7 +10,7 @@ public class Patient : TenantEntity
 
     public string? BloodGroup { get; set; }
     public string? Genotype { get; set; }
-    
+
     public Guid ApplicationUserId { get; set; }
     public ApplicationUser? ApplicationUser { get; set; }
 
@@ -25,4 +26,5 @@ public class Patient : TenantEntity
     public ICollection<PatientLabTest> PatientLabTests { get; set; } = [];
     public ICollection<Visit> Visits { get; set; } = [];
     public ICollection<PatientFacilityOpdCaptureItem> PatientFacilityOpdCaptureItems { get; set; } = [];
+    public ICollection<Consultation> Consultations { get; set; } = [];
 }

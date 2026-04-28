@@ -11,6 +11,8 @@ public record CreateAnEmployeeRequest(
     string? DepartmentId,
     string? RoleId,
     string? EmployedAt,
+    string Gender,
+    string Nationality,
     IEnumerable<string>? Permissions);
 
 public record CreateAnEmployeeResponse(
@@ -27,4 +29,6 @@ public record CreateAnEmployeeCommand(
     Guid? DepartmentId,
     Guid RoleId,
     DateTime? EmployedAt,
+    string Gender,
+    string Nationality,
     IEnumerable<string>? Permissions) : ICommand<BaseResponse<CreateAnEmployeeResponse>>;

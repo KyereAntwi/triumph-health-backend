@@ -1,0 +1,74 @@
+name: Production CD
+
+on:
+  push:
+    branches: [main]
+
+env:
+  DOTNET_VERSION: "10.0.x"
+  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/triumph-healthms
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore Triumph.HealthMS.slnx
+
+      - name: Build
+        run: dotnet build Triumph.HealthMS.slnx --no-restore -c Release
+
+      - name: Run unit tests
+        run: dotnet test tests/core/Triumph.HealthMS.Application.UnitTests/Triumph.HealthMS.Application.UnitTests.csproj --no-build -c Release --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: ./test-results
+
+  deploy-production:
+    name: Deploy to Production (Manual Approval)
+    runs-on: ubuntu-latest
+    needs: test
+    environment: production  # ← Requires manual approval via GitHub Environment protection rules
+    steps:
+      - name: Deploy to CloudClusters Production
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          port: 22
+          script: |
+            # Pull the latest image (built from development)
+            docker pull ${{ env.DOCKER_IMAGE }}:latest
+
+            # Stop and remove existing container if running
+            docker stop triumph-healthms-prod || true
+            docker rm triumph-healthms-prod || true
+
+            # Run the new container with env vars
+            docker run -d \
+              --name triumph-healthms-prod \
+              --restart unless-stopped \
+              -p 8080:8080 \
+              -p 8081:8081 \
+              -e ASPNETCORE_ENVIRONMENT=Production \
+              -e "ConnectionStrings__healthcare=${{ secrets.PROD_DB_CONNECTION }}" \
+              -e "ConnectionStrings__redis=${{ secrets.PROD_REDIS_CONNECTION }}" \
+              -e "RabbitMQ__Connection=${{ secrets.PROD_RABBITMQ_CONNECTION }}" \
+              -e "AuthServer__Authority=${{ secrets.PROD_AUTH_AUTHORITY }}" \
+              -e "AuthServer__Realm=${{ secrets.PROD_AUTH_REALM }}" \
+              -e "AuthServer__Audience=${{ secrets.PROD_AUTH_AUDIENCE }}" \
+              -e "Sentry__Dsn=${{ secrets.PROD_SENTRY_DSN }}" \
+              ${{ env.DOCKER_IMAGE }}:latest

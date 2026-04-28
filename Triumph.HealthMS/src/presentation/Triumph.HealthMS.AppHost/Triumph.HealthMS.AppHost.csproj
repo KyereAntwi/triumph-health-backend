@@ -9,11 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Triumph.HealthMS.Host\Triumph.HealthMS.Host.csproj" />
-      <ProjectReference Include="..\Triumph.HealthMS.Service.Defaults\Triumph.HealthMS.Service.Defaults.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Aspire.Hosting.Keycloak" Version="13.2.1-preview.1.26180.6" />
       <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.2.1" />
       <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="13.2.1" />

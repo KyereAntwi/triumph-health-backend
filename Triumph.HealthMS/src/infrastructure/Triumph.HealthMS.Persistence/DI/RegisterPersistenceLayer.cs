@@ -9,14 +9,14 @@ public static class RegisterPersistenceLayer
         services.AddScoped<AuditingInterceptor>();
         services.AddDbContext<IApplicationDbContext, AppDbContext>((sp, options) =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("postgres"));
+            options.UseNpgsql(configuration.GetConnectionString("healthcare"));
             options.AddInterceptors(sp.GetRequiredService<AuditingInterceptor>());
         });
 
         // for internal action logs
         services.AddMarten(options =>
         {
-            options.Connection(configuration.GetConnectionString("postgres")!);
+            options.Connection(configuration.GetConnectionString("healthcare")!);
             options.DatabaseSchemaName = "audit";
             options.Schema.For<AuditLog>();
         })

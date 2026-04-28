@@ -2,6 +2,7 @@
 
 global using FluentAssertions;
 global using MassTransit;
+global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
 global using NSubstitute;
@@ -11,9 +12,17 @@ global using Triumph.HealthMS.Application.Features.Employees.LinkInvitedEmployee
 global using Triumph.HealthMS.Application.Features.Employees.UpdateRole;
 global using Triumph.HealthMS.Application.Features.HealthFacilities.CreateAFacility;
 global using Triumph.HealthMS.Application.Features.HealthOrganizations.CreateAnOrganization;
+global using Triumph.HealthMS.Application.Features.Patients.CreateAPatient;
+global using Triumph.HealthMS.Application.Features.Patients.CapturePatientMeasurableItems;
+global using Triumph.HealthMS.Application.Features.Patients.LinkPatientToCreatedAccount;
+global using Triumph.HealthMS.Application.Features.Patients.AddConsultation;
+global using Triumph.HealthMS.Application.Features.Patients.ProcessConsultation;
+global using Triumph.HealthMS.Application.Features.Patients.StartAConsultation;
+global using Triumph.HealthMS.Application.Features.Patients.CreatePatientVisit;
 global using Triumph.HealthMS.Application.Interfaces;
 global using Triumph.HealthMS.Application.UnitTests.Mocks;
 global using Triumph.HealthMS.Domain.Common;
+global using Triumph.HealthMS.Domain.Common.Enums;
 global using Triumph.HealthMS.Domain.Patients;
 global using Triumph.HealthMS.Domain.Tenants;
 global using Triumph.HealthMS.Domain.Tenants.Employees;

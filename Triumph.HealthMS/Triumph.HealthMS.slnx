@@ -14,7 +14,6 @@
     <Project Path="src/presentation/Triumph.HealthMS.Commands/Triumph.HealthMS.Commands.csproj" />
     <Project Path="src/presentation/Triumph.HealthMS.Host/Triumph.HealthMS.Host.csproj" />
     <Project Path="src/presentation/Triumph.HealthMS.Queries/Triumph.HealthMS.Queries.csproj" />
-    <Project Path="src/presentation/Triumph.HealthMS.Service.Defaults/Triumph.HealthMS.Service.Defaults.csproj" />
   </Folder>
   <Folder Name="/tests/" />
   <Folder Name="/tests/core/">

@@ -90,6 +90,8 @@ public class CreateAnEmployee : IDisposable
             DepartmentId: departmentId,
             RoleId: roleId ?? _testRoleId,
             EmployedAt: DateTime.UtcNow,
+            Gender: "Male",
+            Nationality: "Testland",
             Permissions: permissions);
 
     #endregion

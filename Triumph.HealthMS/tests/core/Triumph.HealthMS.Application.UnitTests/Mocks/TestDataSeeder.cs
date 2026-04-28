@@ -45,11 +45,13 @@ public static class TestDataSeeder
     /// </summary>
     public static ITenantContext CreateMockTenantContext(
         string? userId = null,
-        Guid? tenantId = null)
+        Guid? tenantId = null,
+        Guid? facilityId = null)
     {
         var tenantContext = Substitute.For<ITenantContext>();
         tenantContext.UserId.Returns(userId ?? TestConstants.TestUserId);
         tenantContext.TenantId.Returns(tenantId ?? TestConstants.TestTenantId);
+        tenantContext.FacilityId.Returns(facilityId);
         return tenantContext;
     }
 
@@ -120,6 +122,43 @@ public static class TestDataSeeder
 
         dbContext.SaveChanges();
         return (employee, user, employeeRole);
+    }
+
+    /// <summary>
+    /// Seeds a Patient (with an ApplicationUser) and returns the patient.
+    /// </summary>
+    public static Patient SeedPatient(
+        TestAppDbContext dbContext,
+        Guid? tenantId = null,
+        Guid? facilityId = null)
+    {
+        var tid = tenantId ?? TestConstants.TestTenantId;
+
+        var user = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            FirstName = "Patient",
+            LastName = "User",
+            Email = "patient@test.com",
+            PhoneNumber = "+0000000000",
+            DateOfBirth = new DateOnly(1985, 3, 20),
+            UserId = "Unassigned",
+            OtherNames = string.Empty
+        };
+        dbContext.ApplicationUsers.Add(user);
+
+        var patient = new Patient
+        {
+            Id = Guid.NewGuid(),
+            ApplicationUserId = user.Id,
+            TenantId = tid,
+            FacilityId = facilityId ?? Guid.NewGuid(),
+            NationalIdNumber = "NAT-001",
+            HomeAddress = "1 Test St"
+        };
+        dbContext.Patients.Add(patient);
+        dbContext.SaveChanges();
+        return patient;
     }
 
     /// <summary>
