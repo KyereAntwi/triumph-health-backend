@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: src/presentation/Triumph.HealthMS.Host/Dockerfile
+          file: Triumph.HealthMS/src/presentation/Triumph.HealthMS.Host/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_IMAGE }}:latest
