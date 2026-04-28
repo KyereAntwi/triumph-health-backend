@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/core/">
+    <Project Path="src/core/Triumph.HealthMS.Application/Triumph.HealthMS.Application.csproj" />
+    <Project Path="src/core/Triumph.HealthMS.Domain/Triumph.HealthMS.Domain.csproj" />
+    <Project Path="src/core/Triumph.HealthMS.Shared/Triumph.HealthMS.Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/infrastructure/">
+    <Project Path="src/infrastructure/Triumph.HealthMS.ExternalServices/Triumph.HealthMS.ExternalServices.csproj" />
+    <Project Path="src/infrastructure/Triumph.HealthMS.Persistence/Triumph.HealthMS.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/src/presentation/">
+    <Project Path="src/presentation/Triumph.HealthMS.AppHost/Triumph.HealthMS.AppHost.csproj" />
+    <Project Path="src/presentation/Triumph.HealthMS.Commands/Triumph.HealthMS.Commands.csproj" />
+    <Project Path="src/presentation/Triumph.HealthMS.Host/Triumph.HealthMS.Host.csproj" />
+    <Project Path="src/presentation/Triumph.HealthMS.Queries/Triumph.HealthMS.Queries.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/core/">
+    <Project Path="tests/core/Triumph.HealthMS.Application.UnitTests/Triumph.HealthMS.Application.UnitTests.csproj" />
+  </Folder>
+</Solution>
